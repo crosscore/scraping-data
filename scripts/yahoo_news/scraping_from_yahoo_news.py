@@ -8,7 +8,7 @@ import datetime
 import re
 
 today_date = datetime.datetime.now().strftime('%Y%m%d')
-concat_dir = '../csv/yahoo_news/concat/'
+concat_dir = '../../data/csv/yahoo_news/concat/'
 skip_urls = set()
 
 if os.path.exists(concat_dir) and os.listdir(concat_dir):
@@ -24,14 +24,14 @@ if os.path.exists(concat_dir) and os.listdir(concat_dir):
                 latest_version = version
                 latest_file = file
     next_version = latest_version + 1
-    output_file = f'../csv/yahoo_news/daily/yahoo_news_articles_{today_date}_v{next_version}.csv'
+    output_file = f'../../data/csv/yahoo_news/daily/yahoo_news_articles_{today_date}_v{next_version}.csv'
     if latest_file:
         latest_df = pd.read_csv(os.path.join(concat_dir, latest_file))
         print(f'latest_df: {latest_df}')
         skip_urls = set(latest_df['url'].dropna().unique())
 else:
     print("First scraping today or directory does not exist or is empty.")
-    output_file = f'../csv/yahoo_news/daily/yahoo_news_articles_{today_date}_v1.csv'
+    output_file = f'../../data/csv/yahoo_news/daily/yahoo_news_articles_{today_date}_v1.csv'
 
 print(f'output_file: {output_file}')
 os.makedirs(os.path.dirname(output_file), exist_ok=True)

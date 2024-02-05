@@ -5,8 +5,8 @@ import numpy as np
 import datetime
 import re
 
-backup_directory = '../csv/yahoo_news/backup/'
-concat_directory = '../csv/yahoo_news/concat/'
+backup_directory = '../../data/csv/yahoo_news/backup/'
+concat_directory = '../../data/csv/yahoo_news/concat/'
 os.makedirs(backup_directory, exist_ok=True)
 
 def delete_old_files(directory, days=1):

@@ -7,19 +7,19 @@ import re
 
 category_list = ['国内', '国際', '経済', 'エンタメ', 'スポーツ', 'IT', '科学', 'ライフ', '地域']
 
-new_files = glob.glob('../csv/yahoo_news/daily/*.csv')
+new_files = glob.glob('../../data/csv/yahoo_news/daily/*.csv')
 if new_files:
     new_file = new_files[0]
     # Extract date and version part from file name
     file_part = re.search(r'(\d{8}_v\d+)\.csv$', new_file)
     if file_part:
         file_part = file_part.group(1)
-        output_file = f'../csv/yahoo_news/concat/yahoo_news_concat_{file_part}.csv'
+        output_file = f'../../data/csv/yahoo_news/concat/yahoo_news_concat_{file_part}.csv'
     else:
         print("Unable to extract date and version from filename of new_file.")
 else:
     print("new_file not found.")
-original_files = glob.glob('../csv/yahoo_news/concat/*.csv')
+original_files = glob.glob('../../data/csv/yahoo_news/concat/*.csv')
 original_file = original_files[0]
 
 print("============ exec concat_only_unique_urls.py ============")
@@ -65,9 +65,9 @@ print('---------')
 for column in df.columns:
     print(f"df['{column}'].duplicated().sum(): {df[column].duplicated().sum()}")
 print('---------')
-#Delete all .csv files in '../csv/yahoo_news/daily/' folder
-for file in os.listdir('../csv/yahoo_news/daily/'):
-    os.remove(os.path.join('../csv/yahoo_news/daily/', file))
+#Delete all .csv files in '../../data/csv/yahoo_news/daily/' folder
+for file in os.listdir('../../data/csv/yahoo_news/daily/'):
+    os.remove(os.path.join('../../data/csv/yahoo_news/daily/', file))
     print(f"remove: {file}")
 print('---------')
 print(f"befor : {before_num}")

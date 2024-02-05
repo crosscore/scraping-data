@@ -1,7 +1,7 @@
 import os
 import zipfile
 
-directory = '../csv/yahoo_news/concat/'
+directory = '../../data/csv/yahoo_news/concat/'
 
 # List all files in the directory
 files = os.listdir(directory)
