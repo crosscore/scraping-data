@@ -2,11 +2,8 @@ import pandas as pd
 import glob
 import re
 
-file_list = glob.glob('../../csv/yahoo_news/concat/*_v*.csv')
-# Select latest files based on version number
-latest_file = max(file_list, key=lambda x: int(re.search(r'_v(\d+).csv', x).group(1)))
-print(latest_file)
-df = pd.read_csv(latest_file, encoding='utf-8')
+file_list = glob.glob('../../../data/csv/yahoo_news/concat/*.csv')
+df = pd.read_csv(file_list[0], encoding='utf-8')
 
 #Delete the row that contains the string '/pickup/' in the 'url' column of df
 #df = df.copy()[~df['url'].str.contains('/pickup/')]

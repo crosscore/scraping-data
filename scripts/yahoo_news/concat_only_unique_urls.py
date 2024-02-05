@@ -34,7 +34,7 @@ else:
 print(f"df_original['category'].value_counts(dropna=False):\n{df_original['category'].value_counts(dropna=False)}")
 
 before_num = df_original['url'].nunique()
-df_new = pd.read_csv(new_file)
+df_new = pd.read_csv(new_file, encoding='utf-8')
 df_concat = pd.concat([df_original, df_new])
 
 df_concat.drop_duplicates(subset=['title'], inplace=True)

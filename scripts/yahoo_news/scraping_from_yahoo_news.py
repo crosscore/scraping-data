@@ -10,6 +10,8 @@ import re
 today_date = datetime.datetime.now().strftime('%Y%m%d')
 concat_dir = '../../data/csv/yahoo_news/concat/'
 skip_urls = set()
+os.makedirs('../../data/csv/yahoo_news/daily/', exist_ok=True)
+os.makedirs('../../data/csv/yahoo_news/backup/', exist_ok=True)
 
 if os.path.exists(concat_dir) and os.listdir(concat_dir):
     files = os.listdir(concat_dir)
@@ -100,7 +102,9 @@ def scrape_news(category, url):
     return []
 
 def clean_text(text):
-    return text.replace('\u2028', '').replace('\u2029', '')
+    text = text.replace('\u2028', '').replace('\u2029', '')  # ユニコード行区切り文字を削除
+    text = text.replace('"', '""')  # 引用符をエスケープ
+    return text
 
 def scrape_article_content(link,  MAX_RETRIES = 6):
     attempts = 0
@@ -151,6 +155,7 @@ for article in all_articles:
     print(f'{category} {title} ...')
     content = scrape_article_content(link)
     print(f'Found {len(content)} characters.')
+    title = clean_text(title)
     all_articles_data.append([category, title, link, content])
     time.sleep(0.5)
 
