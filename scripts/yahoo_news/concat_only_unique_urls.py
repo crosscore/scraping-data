@@ -1,9 +1,22 @@
-#concat_only_unique_urls.py
-import pandas as pd
+"""concat_only_unique_urls.py
+ユニークなURLのみを残して、新しいファイルを作成する
+"""
 import os
-import datetime
-import glob
 import re
+import glob
+import pandas as pd
+
+def extract_latest_rows_by_category(df_input, max_rows_per_category=5000):
+    """
+    各カテゴリ毎に最新の行を指定数だけ取得し、新たなデータフレームを返す。
+    """
+    categories = df_input['category'].unique()
+    new_dfs = []
+    for category in categories:
+        df_category = df_input[df_input['category'] == category]
+        df_latest = df_category.tail(max_rows_per_category)
+        new_dfs.append(df_latest)
+    return pd.concat(new_dfs)
 
 category_list = ['国内', '国際', '経済', 'エンタメ', 'スポーツ', 'IT', '科学', 'ライフ', '地域']
 
@@ -31,7 +44,8 @@ if original_file and os.path.exists(original_file):
     df_original = pd.read_csv(original_file)
 else:
     df_original = pd.DataFrame()
-print(f"df_original['category'].value_counts(dropna=False):\n{df_original['category'].value_counts(dropna=False)}")
+print(f"df_original['category'].value_counts(dropna=False):\n\
+        {df_original['category'].value_counts(dropna=False)}")
 
 before_num = df_original['url'].nunique()
 df_new = pd.read_csv(new_file, encoding='utf-8')
@@ -43,11 +57,17 @@ df_concat.drop_duplicates(subset=['url'], inplace=True)
 df_concat.dropna()
 
 # Leave only str lines (deals with float-only lines)
-df_concat = df_concat[(df_concat['title'].apply(lambda x: isinstance(x, str))) & (df_concat['content'].apply(lambda x: isinstance(x, str)))]
+df_concat = df_concat[(df_concat['title'].apply(lambda x: isinstance(x, str))) & \
+            (df_concat['content'].apply(lambda x: isinstance(x, str)))]
 
 # Processing categories
-df_concat['category'] = pd.Categorical(df_concat['category'], categories=category_list, ordered=True)
+df_concat['category'] = pd.Categorical(df_concat['category'], \
+                            categories=category_list, ordered=True)
 df_concat.sort_values(by='category', inplace=True)
+
+# 各カテゴリに対して最新の5000行を抽出
+df_concat = extract_latest_rows_by_category(df_concat, 5000)
+
 df_concat.to_csv(output_file, index=False)
 
 # Check the data

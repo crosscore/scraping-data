@@ -1,18 +1,17 @@
-#subprocess_script.py
+"""
+This module contains a script for running subprocesses.
+"""
+# scraping-data/scripts/yahoo_news/subprocess_script.py
 import subprocess
 
-# script_file0 = "./download_zip_files_from_google_drive"
-script_file1 = "./unzip_zip_file.py"
-script_file2 = "./scraping_from_yahoo_news.py"
-script_file3 = "./concat_only_unique_urls.py"
-script_file4 = "./remove_text_outliers.py"
-script_file5 = "./compress_csv_to_zip.py"
-# script_file6 = "./upload_zip_files_to_google_drive"
+SCRIPT_FILE1 = "./unzip_zip_file.py"
+SCRIPT_FILE2 = "./scraping_from_yahoo_news.py"
+SCRIPT_FILE3 = "./concat_only_unique_urls.py"
+SCRIPT_FILE4 = "./remove_text_outliers.py"
+SCRIPT_FILE5 = "./compress_csv_to_zip.py"
 
-# subprocess.run(["python3", script_file0])
-subprocess.run(["python3", script_file1])
-subprocess.run(["python3", script_file2])
-subprocess.run(["python3", script_file3])
-subprocess.run(["python3", script_file4])
-subprocess.run(["python3", script_file5])
-# subprocess.run(["python3", script_file6])
+subprocess.run(["python3", SCRIPT_FILE1], check=True)
+subprocess.run(["python3", SCRIPT_FILE2], check=True)
+subprocess.run(["python3", SCRIPT_FILE3], check=True)
+subprocess.run(["python3", SCRIPT_FILE4], check=True)
+subprocess.run(["python3", SCRIPT_FILE5], check=True)
