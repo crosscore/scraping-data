@@ -13,6 +13,7 @@ def get_output_file(concat_dir, today_date):
     """
     出力ファイル名を取得する
     """
+    skip_urls = set()
     if os.path.exists(concat_dir) and os.listdir(concat_dir):
         files = os.listdir(concat_dir)
         pattern = re.compile(rf'yahoo_news_concat_{today_date}_v(\d+)\.csv$')
@@ -26,8 +27,7 @@ def get_output_file(concat_dir, today_date):
                     latest_version = version
                     latest_file = file
         next_version = latest_version + 1
-        output_file = f'../../data/csv/yahoo_news/daily/\
-                        yahoo_news_articles_{today_date}_v{next_version}.csv'
+        output_file = f'../../data/csv/yahoo_news/daily/yahoo_news_articles_{today_date}_v{next_version}.csv'
         if latest_file:
             latest_df = pd.read_csv(os.path.join(concat_dir, latest_file))
             print(f'latest_df: {latest_df}')
@@ -35,9 +35,9 @@ def get_output_file(concat_dir, today_date):
     else:
         print("First scraping today or directory does not exist or is empty.")
         output_file = f'../../data/csv/yahoo_news/daily/yahoo_news_articles_{today_date}_v1.csv'
-        skip_urls = set()
 
     return output_file, skip_urls
+
 
 def scrape_news(category, url, skip_urls, all_urls_set, max_retries, retry_interval):
     """
