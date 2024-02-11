@@ -6,18 +6,6 @@ import re
 import glob
 import pandas as pd
 
-def extract_latest_rows_by_category(df_input, max_rows_per_category=5000):
-    """
-    各カテゴリ毎に最新の行を指定数だけ取得し、新たなデータフレームを返す。
-    """
-    categories = df_input['category'].unique()
-    new_dfs = []
-    for category in categories:
-        df_category = df_input[df_input['category'] == category]
-        df_latest = df_category.tail(max_rows_per_category)
-        new_dfs.append(df_latest)
-    return pd.concat(new_dfs)
-
 category_list = ['国内', '国際', '経済', 'エンタメ', 'スポーツ', 'IT', '科学', 'ライフ', '地域']
 
 new_files = glob.glob('../../data/csv/yahoo_news/daily/*.csv')
@@ -64,9 +52,6 @@ df_concat = df_concat[(df_concat['title'].apply(lambda x: isinstance(x, str))) &
 df_concat['category'] = pd.Categorical(df_concat['category'], \
                             categories=category_list, ordered=True)
 df_concat.sort_values(by='category', inplace=True)
-
-# 各カテゴリに対して最新の5000行を抽出
-df_concat = extract_latest_rows_by_category(df_concat, 5000)
 
 df_concat.to_csv(output_file, index=False)
 

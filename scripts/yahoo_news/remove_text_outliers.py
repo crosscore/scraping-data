@@ -9,6 +9,18 @@ backup_directory = '../../data/csv/yahoo_news/backup/'
 concat_directory = '../../data/csv/yahoo_news/concat/'
 os.makedirs(backup_directory, exist_ok=True)
 
+def extract_latest_rows_by_category(df_input, max_rows_per_category=5000):
+    """
+    各カテゴリ毎に最新の行を指定数だけ取得し、新たなデータフレームを返す。
+    """
+    categories = df_input['category'].unique()
+    new_dfs = []
+    for category in categories:
+        df_category = df_input[df_input['category'] == category]
+        df_latest = df_category.tail(max_rows_per_category)
+        new_dfs.append(df_latest)
+    return pd.concat(new_dfs)
+
 def delete_old_files(directory, days=1):
     now = datetime.datetime.now()
     cutoff = now - datetime.timedelta(days=days)
@@ -90,6 +102,10 @@ if latest_csv and os.path.exists(latest_csv):
     before_num = df['title'].nunique()
     # Delete outliers
     df = apply_remove_outliers(df)
+
+    # Extract latest rows by category
+    df = extract_latest_rows_by_category(df)
+
     # Save processed data
     df.to_csv(latest_csv, index=False)
     backup_csv = os.path.basename(latest_csv)
