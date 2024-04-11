@@ -10,8 +10,8 @@ SCRIPT_FILE3 = "./concat_only_unique_urls.py"
 SCRIPT_FILE4 = "./remove_text_outliers.py"
 SCRIPT_FILE5 = "./compress_csv_to_zip.py"
 
-subprocess.run(["/home/linuxbrew/.linuxbrew/bin/python3.11", SCRIPT_FILE1], check=True)
-subprocess.run(["/home/linuxbrew/.linuxbrew/bin/python3.11", SCRIPT_FILE2], check=True)
-subprocess.run(["/home/linuxbrew/.linuxbrew/bin/python3.11", SCRIPT_FILE3], check=True)
-subprocess.run(["/home/linuxbrew/.linuxbrew/bin/python3.11", SCRIPT_FILE4], check=True)
-subprocess.run(["/home/linuxbrew/.linuxbrew/bin/python3.11", SCRIPT_FILE5], check=True)
+subprocess.run(["/opt/homebrew/bin/python3.11", SCRIPT_FILE1], check=True)
+subprocess.run(["/opt/homebrew/bin/python3.11", SCRIPT_FILE2], check=True)
+subprocess.run(["/opt/homebrew/bin/python3.11", SCRIPT_FILE3], check=True)
+subprocess.run(["/opt/homebrew/bin/python3.11", SCRIPT_FILE4], check=True)
+subprocess.run(["/opt/homebrew/bin/python3.11", SCRIPT_FILE5], check=True)
